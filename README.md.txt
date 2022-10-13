@@ -1,0 +1,1 @@
+Copy to "C:\Program Files\Epic Games\UE_5.0\Engine\Plugins\VirtualProduction\Switchboard\Source\Switchboard\switchboard\devices"
