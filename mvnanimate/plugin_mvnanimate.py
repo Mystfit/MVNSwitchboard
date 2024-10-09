@@ -23,8 +23,8 @@ class DeviceMVNAnimate(Device):
     setting_session_path = DirectoryPathSetting(
         "session_path", "Current session recording path", "")
 
-    def __init__(self, name, ip_address, **kwargs):
-        super().__init__(name, ip_address, **kwargs)
+    def __init__(self, name, address, **kwargs):
+        super().__init__(name, address, **kwargs)
 
         self.trigger_start = True
         self.trigger_stop = True
@@ -93,7 +93,8 @@ class DeviceMVNAnimate(Device):
         """
 
         self.awaiting_echo_response = False
-        self.status = DeviceStatus.READY
+        if self.status != DeviceStatus.RECORDING:
+            self.status = DeviceStatus.READY
         
         LOGGER.warning("MVN identify response: {}".format(tostring(response)))
 
@@ -146,7 +147,7 @@ class DeviceMVNAnimate(Device):
                     self._flush_read_sockets()
                     self.socket.sendto(
                         message_str,
-                        (self.ip_address,
+                        (self.address,
                          self.setting_mvnanimate_port.get_value()))
 
                     read_sockets, _, _ = select.select(
